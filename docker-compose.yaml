@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  db: # Container de MySQL
+    image: mysql:5.7 
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: weslley
+      MYSQL_DATABASE: teste
+      MYSQL_USER: teste
+      MYSQL_PASSWORD: password
+
+  projeto:
+    image: imagem-spring-boot
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  db_data: {}
